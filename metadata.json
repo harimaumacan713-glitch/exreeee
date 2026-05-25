@@ -1,0 +1,6 @@
+{
+  "name": "AetherEx Wallet",
+  "description": "Professional-grade digital asset wallet and spot trading platform featuring advanced portfolio analytics and high-precision trading tools.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

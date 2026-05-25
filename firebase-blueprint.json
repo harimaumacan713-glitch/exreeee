@@ -1,0 +1,92 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Basic user identity and settings",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "tier": { "type": "string" },
+        "tradingFee": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "createdAt"]
+    },
+    "Wallet": {
+      "title": "Wallet State",
+      "description": "User's current balance and overall stats",
+      "type": "object",
+      "properties": {
+        "totalBalance": { "type": "number" },
+        "pnl24h": { "type": "number" },
+        "pnlPercent": { "type": "number" },
+        "lastUpdated": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Holding": {
+      "title": "Asset Holding",
+      "description": "A specific crypto asset help by a user",
+      "type": "object",
+      "properties": {
+        "symbol": { "type": "string" },
+        "name": { "type": "string" },
+        "balance": { "type": "number" },
+        "valueUsd": { "type": "number" }
+      },
+      "required": ["symbol", "balance"]
+    },
+    "ExchangeOrder": {
+      "title": "Exchange Order",
+      "description": "A trade order (spot or futures)",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "asset": { "type": "string" },
+        "side": { "type": "string", "enum": ["buy", "sell"] },
+        "type": { "type": "string", "enum": ["market", "limit"] },
+        "price": { "type": "number" },
+        "amount": { "type": "number" },
+        "filled": { "type": "number" },
+        "status": { "type": "string", "enum": ["open", "completed", "cancelled"] },
+        "category": { "type": "string", "enum": ["spot", "futures"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "asset", "side", "status", "createdAt"]
+    },
+    "MarketTicker": {
+      "title": "Market Ticker",
+      "description": "Real-time price for a pair",
+      "type": "object",
+      "properties": {
+        "symbol": { "type": "string" },
+        "price": { "type": "number" },
+        "change24h": { "type": "number" },
+        "volume24h": { "type": "number" }
+      }
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile data"
+    },
+    "users/{userId}/wallet/summary": {
+      "schema": "Wallet",
+      "description": "User balance summary"
+    },
+    "users/{userId}/holdings/{assetId}": {
+      "schema": "Holding",
+      "description": "User asset balances"
+    },
+    "users/{userId}/orders/{orderId}": {
+      "schema": "ExchangeOrder",
+      "description": "User trade orders"
+    },
+    "markets/tickers": {
+      "schema": "MarketTicker",
+      "description": "Public market prices"
+    }
+  }
+}
